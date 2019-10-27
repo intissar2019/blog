@@ -1,0 +1,32 @@
+<div class="boxConnexion bg-dark">
+	<header>
+		<h3 class="text-white">Connexion</h3>
+	</header>
+		<span style="color²: red;"><?php if(isset($error)){ echo($error);} ?></span>
+		<p class="text-white"><i>Vous devez remplir les champs ci-dessous :</i></p>
+		<form method="POST" action="">
+			<input id="pseudo" type="text" name="pseudo" placeholder="Votre pseudo">
+			<input id="password" type="password" name="psw" placeholder="************">
+			<input type="submit" name="btnSubmit" id="submit" class="btn btn-secondary">
+		</form>
+	</div>
+	<script type="text/javascript">
+	$('#submit').click( function(e){
+	//$('form').trigger('reset');
+		
+		pseudo=$('#pseudo').val();
+		password=$('#password').val();
+	
+	if(password==''|| pseudo==''){
+		e.preventDefault();
+		$('p').css('color','red');
+		$('#pseudo').css('border','1px solid red');
+		$('#password').css('border','1px solid red');
+	}else
+	{
+
+	}
+
+	});	
+
+	</script>

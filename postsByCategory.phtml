@@ -1,0 +1,32 @@
+<div class="container" >
+ <header>
+     <h1> Catégorie:<?=$postsByCategory[0]['name'] ?></h1>
+ </header>
+
+            <div class="row" id="mainposts">
+              <?php if ($postsByCategory!= false){?>
+             <?php foreach($postsByCategory as $indexPostsBycategory => $postBycategory){ ?>
+              <!-- post -->
+            <div class="post col-xl-6">
+            <div class="post-thumbnail"><a href="post.php?idPost=<?= $postBycategory['ida']?>"><img src="img/<?=$postBycategory['imageArticle']?>" alt="image:<?=$postBycategory['titre'] ?>" class="img-fluid img-zoom"></a></div>
+                <div class="post-details">
+                  <div class="post-meta d-flex justify-content-between">
+                    <div class="date meta-last"><?=$postBycategory['dateArticle']?></div>
+                    <div class="category"><a href="#"><?=$postBycategory['name']?></a></div>
+                  </div><a href="">
+                    <h3 class="h4"><?=$postBycategory['titre']?></h3></a>
+                  <p class="text-muted"><?=substr($postBycategory['body'], 0,300)?></p>
+                  <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
+                      <div class="avatar"><img src="img/moi.jpg" alt="..." class="img-fluid"></div>
+                      <div class="title"><span><?php echo ($postBycategory['first_Name'].' '.$postBycategory['last_Name']); ?></span></div></a>
+                    
+                    <div class="comments meta-last"><i class="icon-comment"></i><?=$numberOfComments[$indexPostsBycategory]['nbc']?></div>
+                  </footer>
+                </div>
+              </div>
+                <?php }}?>
+          </div>
+        </div>
+ 
+
+

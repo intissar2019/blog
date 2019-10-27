@@ -1,0 +1,31 @@
+
+	<div class="container">
+		<header>
+			<h1 class="headingPage">Ajouter un article :</h1>
+		</header>
+		<div class="boxAddPost">
+			<form action="" method="POST" enctype="multipart/form-data">
+				<label for="title">Titre de l'article :</label>
+				<input class="form-control" id="title" type="text" name="title">
+				<label for="description">Corps de l'article :</label>
+				<textarea class="form-control" id="description" name="description" rows="10" cols="40" placeholder="Ecrire votre article ici ..."></textarea>
+				<div class="right">
+					<div>
+						<select id="Category" name="Category">
+							<?php if ($categories!= false){
+							foreach($categories as $indexCat => $category){ ?>
+							<option value="<?= $category['name']?>"><?= $category['name'] ?>
+							</option>
+							<?php }} ?>
+						</select>
+						<a class="btn btn-sm" href="addCategory.php"><i class="fas fa-plus-circle"></i></a>
+					</div>
+					<div name="user">
+						<p >Publier l'Article en tant que :<span style=" color: purple"><?php echo($users['last_Name']." ".$users['first_Name'] ); ?></p>
+					</div>
+				</div>
+				<input type="file" name="fileToUpload" id="fileToUpload">
+				<input type="submit" name="submit" id="btnSubmit" value="Enregistrer">
+			</form>
+		</div>
+	</div>

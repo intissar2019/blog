@@ -1,0 +1,105 @@
+<div class="container">
+  <div class="post-single post">
+    <div class="post-thumbnail">
+      <img src="img/<?=$singlePost['imageArticle']?>" alt="..." class="img-fluid">
+    </div>
+    <div class="post-details">
+      <div class="post-meta d-flex justify-content-between">
+        <div class="category">
+          <a href="#"><?=$singlePost['name']?></a>
+        </div>
+      </div>
+      <h1><?=$singlePost['titre']?><a href="#"><i class="fa fa-bookmark-o"></i></a>
+      </h1>
+      <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="#" class="author d-flex align-items-center flex-wrap">
+        <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid"></div>
+        <div class="title"><span><?php echo ($singlePost['first_Name'].' '.$singlePost['last_Name']); ?></span></div></a>
+        <div class="d-flex align-items-center flex-wrap">       
+          <div class="date"><i class="icon-clock"></i><?=$singlePost['dateArticle']?></div>
+          <div class="comments meta-last m-2"><i class="icon-comment"></i><?=$numberOfCommentsSinglePost['nbc']?></div>
+        </div>
+      </div>
+      <div class="post-body">
+        <p class="lead"><?=$singlePost['body']?></p>
+      </div>
+      <?php if ($tags) { ?>
+      <div class="post-tags m-2 p-2 ">
+        <?php foreach ($tags as $indexTag => $tag) {?>
+        <a href="#" class="tag"><?=$tag?></a>
+      <?php } ?>
+      </div>
+      <?php }?>
+
+      <div class="post-comments"> 
+        <header>
+          <h3 class="h6">Commentaires
+            <span class="no-of-comments">
+              <?php echo'('. $numberOfCommentsSinglePost['nbc'].')';
+                if ($numberOfCommentsSinglePost['nbc']==0){ echo (" Soyez le 1er à noter cet Article ! ") ;} ?>         
+            </span>
+          </h3>
+        </header>
+         <?php foreach($commentsSinglePost as $indexcommentsSinglePost => $commentSinglePost)  {?>  
+        <div class="comment">
+          <div class="comment-header d-flex justify-content-between">
+            <div class="user d-flex align-items-center">
+              <div class="image"><img src="img/user.svg" alt="..." class="img-fluid rounded-circle">
+              </div>
+              <div class="title">
+                <strong><?=$commentSinglePost['nameCommentor']?></strong>
+                <span class="date"><?=$commentSinglePost['dateComment']?></span>
+              </div>
+            </div>
+          </div>
+          <div class="comment-body">
+            <p><?=$commentSinglePost['body']?></p>
+          </div>
+        </div>
+        <?php } ?>
+      </div>
+      <div class="add-comment">
+        <header>
+          <h3 class="h6">Ajouter un commentaire</h3>
+        </header>
+        <form  class="commenting-form" action="#" >
+          <div class="row">
+            <div class="form-group col-md-6">
+              <input type="text" name="username" id="username" placeholder="Nom" class="form-control">
+            </div>
+            <div class="form-group col-md-6">
+              <input type="email" name="username" id="useremail" placeholder="Pseudo" class="form-control">
+            </div>
+            <div class="form-group col-md-12">
+              <textarea name="usercomment" id="usercomment" placeholder="Taper votre commentaire" class="form-control"></textarea>
+            </div>
+            <div class="form-group col-md-12">
+              <input type="hidden" name="hidden" value="<?=$id?>" id="hideid" >
+              <button type="submit" class="btn btn-secondary" id="submitc">Commenter</button>
+              <button type="reset" class="btn btn-secondary" id="resetc">Annuler</button>
+            </div>
+            </div>
+          </form>
+        </div>
+    </div>
+  </div>
+</div>
+      
+<script>  $( "#submitc" ).click(function(e) {    e.preventDefault();
+   var nom=$("#username").val();
+   var commentaire=$("#usercomment").val();
+   var hideid=$('#hideid').val();
+   if(commentaire==""){
+     $("#usercomment").css('border','1px solid red');
+   }
+   else{
+         $.ajax({ url : 'addcommenterVisitor.php', type : 'POST',dataType:'html',data:{name:nom,comment:commentaire,hideId:hideid}, success : function(result){
+          $('.post-comments').empty();
+            $('.post-comments').html(result);          }});
+         $('.commenting-form').trigger('reset');
+     }
+ });
+ $( "#resetc" ).click(function(e) {
+   $('.commenting-form').trigger('reset');  });</script>
+
+  </body>
+</html>

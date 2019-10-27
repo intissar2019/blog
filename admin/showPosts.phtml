@@ -1,0 +1,23 @@
+	
+	
+	<div class="container-fluid">
+		<fieldset>
+		<legend>
+	Le nombre d'articles publiés dans le blog est :<?=$countPosts['nb']?>
+		</legend>
+
+		<?php if ($posts!= false){
+		foreach($posts as $index => $post){?>
+		<div class="container post">
+			<h2>
+				<a href="singlePost.php?id=<?= $post['id']?>">  <?= $post['titre'] ?></a>
+			</h2>
+			<p><small><?php echo $post['first_Name'].' '.$post['last_Name'] ?></small> | <small><?= $post['dateArticle'] ?></small> | <small><?=$post['name']?></small>
+			</p>
+			<img src="../img/<?=$post['imageArticle']?>">
+		</div>
+		<?php }}?>	
+        </fieldset>
+	</div>
+
+

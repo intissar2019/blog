@@ -1,23 +1,43 @@
-	
-	
-	<div class="container-fluid">
-		<fieldset>
-		<legend>
-	Le nombre d'articles publiés dans le blog est :<?=$countPosts['nb']?>
-		</legend>
 
-		<?php if ($posts!= false){
-		foreach($posts as $index => $post){?>
-		<div class="container post">
-			<h2>
-				<a href="singlePost.php?id=<?= $post['id']?>">  <?= $post['titre'] ?></a>
-			</h2>
-			<p><small><?php echo $post['first_Name'].' '.$post['last_Name'] ?></small> | <small><?= $post['dateArticle'] ?></small> | <small><?=$post['name']?></small>
-			</p>
-			<img src="../img/<?=$post['imageArticle']?>">
+	<div class="container-fluid">
+		<div class = "page-header p-5">
+				<h2 class="text-center text-secondary">Vos articles(<?=$countPosts['nb']?>)</h2>
+			
+			
 		</div>
-		<?php }}?>	
-        </fieldset>
+		<table class="table table-hover" id="myTable">
+			<thead>
+	   				<tr>
+	      				<th scope="col">Id</th>
+	      				<th scope="col">Date</th>
+	      				<th scope="col">Titre</th>
+	      				<th scope="col">Catégorie</th>
+	      				<th  class="d-none d-lg-block" scope="col">Image</th>
+	      				<th scope="col">Modifier</th>
+	      				<th scope="col">Supprimer</th>
+	    			</tr>
+  			</thead>
+  			<tbody>
+  				<?php if ($posts!= false):
+					foreach($posts as $index => $post):?>
+				<tr>
+						<td><?= $post['id']?></td>
+						<td><?= $post['dateArticle']?></td>
+						<td><a href="singlePost.php?id=<?= $post['id']?>" title="lire l'article" >  <?= $post['titre'] ?></a></td>
+						<td><?=$post['name']?></td>
+						<td class="d-none d-lg-block"><img src="../img/<?=$post['imageArticle']?>"  class="img-fluid " width="80px"  ></td>
+						<td><a href="updatePost.php?id=<?=$post['id']?>" title="modifier l'article"><i class="fas fa-pencil-alt text-success"></i></a></td>
+						<td><a href="deletePost.php?id=<?=$post['id']?>" title="supprimer l'article"><i class="fas fa-trash-alt text-danger"></i></a></td>
+				</tr>
+				<?php endforeach; endif; ?>	
+  			</tbody>
+  		</table>
 	</div>
+	<script type="text/javascript">
+	$(document).ready( function () {
+    $('#myTable').DataTable();
+
+} );
+</script>
 
 

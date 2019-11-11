@@ -1,39 +1,48 @@
 	
-	<h1 class="text-center headingPage">Gérer Votre Article</h1>
 	<div class="container-fluid">
-    <?php if ($singlePost!= false)
-    { ?>
+    <?php if ($singlePost!= false): ?>
 		<div class="container ">
-			<img src="../img/<?=$singlePost['imageArticle']?>" class='imgPost' >
-			<h2> <?= $singlePost['titre'] ?></h2>
-			<p><small><?php echo $singlePost['first_Name'].' '.$singlePost['last_Name'] ?></small> | <small><?= $singlePost['dateArticle'] ?></small> | <small><?=$singlePost['name']?></small>
-			</p>
-			<p><?= $singlePost['body'] ?></p>
-			<div style="text-align: center;">
-			<a href="updatePost.php?id=<?=$singlePost['id']?>"><input type="button" name="Modifier" value=" Modifier "></a>
-			<a href="deletePost.php?id=<?=$singlePost['id']?>"><input type="button" name="delete" value=" Supprimer "></a>
-		</div>
-		</div>
-		<?php }
-		if($comments)
-			{?>
-		<div>
-		<hr style=" border: 1px solid hotpink">
-		<h3>Les commentaires récents:</h3>
-		</div>
-           <?php  }?>
-		<div id="comments">
-			<?php if ($comments!= false){
-		   foreach($comments as $indexComment => $comment){ ?>
-			<div class=" container post" style="background-color:  #d6dbdf ;">
-				<h5><?=$comment['nameCommentor'] ?></h5>
-				<small><?=$comment['dateComment']?></small>
-				<p><?=$comment['body'] ?></p>
-				<a href="deleteComment.php?idc=<?=$comment['id'] ?>&ida=<?=$comment['idArticle'] ?>"><i class="fas fa-trash-alt"></i></a>
+			<div class = "page-header p-5">
+				<h2 class="text-secondary"> <?= $singlePost['titre'] ?></h2>
+				<p>
+					<small>
+					<?php echo $_SESSION['first_Name'].' '.$_SESSION['last_Name'] ?>	
+					</small> | 
+					<small>
+					<?= $singlePost['dateArticle'] ?>
+					</small> | 
+					<small>
+					<?=$singlePost['name']?>
+					</small>
+				</p>
 			</div>
-			<?php
-			 }
-		}?>	
+			<div class="row">
+				<p class="col-md-6 col-xs-12"><?= $singlePost['body'] ?></p>
+				<img src="../img/<?=$singlePost['imageArticle']?>" class="col-md-6 col-xs-12" >
+			</div>
+		</div>
+		<?php endif;
+		if($comments):?>
+		<div>
+		<h4 class="text-dark">Les commentaires récents:</h4>
+		</div>
+           <?php  endif; ?>
+		<div id="comments">
+		   <?php foreach($comments as $indexComment => $comment): ?>
+			<div class="card bg-light mb-3" >
+  				<div class="card-header ">
+  					<div class="row">
+  						<p class="col-md-10"><?=$comment['first_Name'] ?>  <?=$comment['last_Name'] ?></p>
+  						<?php  ?>
+  						<a class="col-md-2" href="deleteComment.php?idc=<?=$comment['id'] ?>&ida=<?=$comment['idArticle'] ?>"><i class="fas fa-trash-alt"></i></a>
+  					</div>
+  				</div>
+  				<div class="card-body">
+   					 <h4 class="card-title"><small><?=$comment['dateComment']?></small></h4>
+   					 <p class="card-text"><?=$comment['body'] ?></p>
+  				</div>
+			</div>
+			<?php endforeach; ?>	
 		</div>
 	</div>
 	

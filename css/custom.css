@@ -1,26 +1,6 @@
 /* your styles go here */
 
 
-.boxConnexion{
-	width: 400px;
-	height: 400px;
-	margin: 10% auto;
-	border-radius: 20px;
-	padding: 20px;
-	box-shadow: 10px 10px 10px black;
-}
-.boxConnexion form{
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-	width: 300px;
-	margin:auto;
-}
-.boxConnexion form *{
-	margin: 10px 0;
-}
-
 
 
 

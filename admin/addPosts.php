@@ -1,11 +1,17 @@
 
 <?php
+    session_start();
+
 include '../connexionDB.php';
 $trouve=false;
+$email=$_SESSION['pseudo'];
+
+
+
 
 $queryAllCategories = $pdo->prepare(
 	"SELECT name 
-	FROM category"
+	 FROM category"
 );
 $queryAllCategories->execute();
 $categories = $queryAllCategories->fetchAll(PDO::FETCH_ASSOC);
@@ -14,10 +20,11 @@ $categories = $queryAllCategories->fetchAll(PDO::FETCH_ASSOC);
 
 $queryUsers = $pdo->prepare(
 	"SELECT last_Name, first_Name,id 
-	FROM user"
+	 FROM user 
+	 WHERE email=?"
 );
-$queryUsers->execute();
-$users = $queryUsers->fetch(PDO::FETCH_ASSOC);
+$queryUsers->execute([$email]);
+$user = $queryUsers->fetch(PDO::FETCH_ASSOC);
 
 
 if(isset($_POST['submit']) && isset($_POST['title']))
@@ -40,6 +47,8 @@ $categoryAdded = $queryCategory->fetch(PDO::FETCH_ASSOC);
 	if(isset($title)&& isset($description))
 			{
 				$lien=$_FILES["fileToUpload"]["name"];
+				$target_dir = "img/";
+				$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
          
 			$queryAddPost = $pdo->prepare("
 					INSERT INTO `article`( `titre`, `body`, `imageArticle`,`id_user`, `id_category`, `dateArticle`) 
@@ -48,11 +57,12 @@ $categoryAdded = $queryCategory->fetch(PDO::FETCH_ASSOC);
 			$t1=[$title,
 				$description,
 				$lien,
-				$users['id'],
+				$user['id'],
 				$categoryAdded['id'],
 				$dateArticle
 			];
 			$queryAddPost->execute($t1);
+			move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $target_dir . basename($lien));
 
 			header ("location:showPosts.php");		
 			}

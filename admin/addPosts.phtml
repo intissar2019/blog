@@ -1,31 +1,41 @@
 
 	<div class="container">
-		<header>
-			<h1 class="headingPage">Ajouter un article :</h1>
-		</header>
-		<div class="boxAddPost">
+		<div class = "page-header">
+			<h2 class="text-center text-secondary">Ajouter un article</h2>
+		</div>
 			<form action="" method="POST" enctype="multipart/form-data">
-				<label for="title">Titre de l'article :</label>
-				<input class="form-control" id="title" type="text" name="title">
-				<label for="description">Corps de l'article :</label>
-				<textarea class="form-control" id="description" name="description" rows="10" cols="40" placeholder="Ecrire votre article ici ..."></textarea>
-				<div class="right">
-					<div>
-						<select id="Category" name="Category">
-							<?php if ($categories!= false){
-							foreach($categories as $indexCat => $category){ ?>
+				<div class="form-group row">
+					<div class="col-sm-12 col-md-6 col-lg-6">
+						<label class="label-form" for="title">Titre de l'article :</label>
+						<input class="form-control" id="title" type="text" name="title">
+					</div>
+					<div class="col-sm-12 col-md-6 col-lg-6">
+						<label class="label-form" for="title">Catégoie:</label>
+						<select class="form-control" id="Category" name="Category">
+							<?php if ($categories!= false):
+							foreach($categories as $indexCat => $category): ?>
 							<option value="<?= $category['name']?>"><?= $category['name'] ?>
 							</option>
-							<?php }} ?>
+							<?php endforeach; endif;?>
 						</select>
-						<a class="btn btn-sm" href="addCategory.php"><i class="fas fa-plus-circle"></i></a>
-					</div>
-					<div name="user">
-						<p >Publier l'Article en tant que :<span style=" color: purple"><?php echo($users['last_Name']." ".$users['first_Name'] ); ?></p>
 					</div>
 				</div>
-				<input type="file" name="fileToUpload" id="fileToUpload">
-				<input type="submit" name="submit" id="btnSubmit" value="Enregistrer">
+				<div class="row">
+					<label class="label-form" for="description">Corps de l'article :</label>
+					<textarea class="form-control" id="description" name="description" rows="10"  placeholder="Ecrire votre article ici ..."></textarea>
+				</div>
+				<div class="form-group mt-3">
+      					<label class="label-form" >Télecharger une image :</label>
+      					<input class="form-control-file" type="file" name="fileToUpload" id="fileToUpload">
+      			</div>			
+				<div class=" row">
+					<p class="h5  col-sm-12 col-md-8 ">Publier l'Article en tant que :<strong class="text-info"><?php echo($_SESSION['last_Name']." ".$_SESSION['first_Name'] ); ?></strong></p>
+					<input class="btn btn-success col-sm-12 col-md-4" type="submit" name="submit" id="btnSubmit" value="Enregistrer">
+				</div>
+				
+				</div>
+				
+				
 			</form>
-		</div>
+	
 	</div>

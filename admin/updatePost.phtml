@@ -1,34 +1,35 @@
 
 	<div class="container">
-		<h1 class="headingPage text-center ">Modifier l' article :<?=$_GET['id'] ?></h1>
-		<div class="boxAddPost">
-			<form action="updatePost.php?id=<?=$_GET['id'] ?>" method="POST" enctype="multipart/form-data">
-				<label for="title">Titre de l'article :</label>
-				<input class="form-control" id="title" type="text" name="title" value="<?=$post['titre']?>">
-				<label for="description">Corps de l'article :</label>
-				<textarea class="form-control" id="description" name="description" rows="10" cols="60"><?=$post['body']?></textarea>
-				<div class="right">
-					<div>
-						<select id="Category" name="Category" class="m-4">
+		<div class = "page-header">
+			<h2 class="text-center text-secondary">Modifier l' article :<?=$_GET['id'] ?></h2>
+		</div>
+		<form action="updatePost.php?id=<?=$_GET['id'] ?>" method="POST" enctype="multipart/form-data">
+				<div class="form-group row">
+					<div class="col-sm-12 col-md-6 col-lg-6">
+						<label for="title">Titre de l'article :</label>
+						<input class="form-control" id="title" type="text" name="title" value="<?=$post['titre']?>">
+					</div>
+					<div class="col-sm-12 col-md-6 col-lg-6">
+						<label class="label-form" for="title">Catégoie:</label>
+						<select id="Category" name="Category" class="form-control">
 							<?php foreach ($categories as $key => $category) {
 							 ?>
 							<option value="<?= $category['name']?>"<?php if($category['name']==$post['name']){echo('selected="selected"');}?>"><?= $category['name']?></option>
 						<?php }?>
 						</select>
-						
-						<br>
-						<input type="file" name="fileToUpload" id="fileToUpload" >
-						<br>
-					</div>
-					<div name="user" class="m-4">
-						<p >Publier l'Article en tant que :<span style=" color: purple"><?php echo($post['last_Name']." ".$post['first_Name'] ); ?>
-						</p>
 					</div>
 				</div>
-				<div class="row d-flex">
-					<input class=" text-center col-lg-6 col-md-6" type="submit" name="submit" id="btnSubmit" value="Modifier">
-					<input class=" col-lg-6 col-md-6 text-center" type="reset" name="back" id="btnback" value="Annuler">
+				<div class="row">
+					<label class="label-form" for="description">Corps de l'article :</label>
+					<textarea class="form-control" id="description" name="description" rows="10"  ><?=$post['body']?></textarea>
+				</div>
+				<div class="form-group mt-3">
+      					<label class="label-form" >Télecharger une image :</label>
+      					<input class="form-control-file" type="file" name="fileToUpload" id="fileToUpload">
+      			</div>
+				<div class=" row">
+					<p class="h5  col-sm-12 col-md-8 ">Publier l'Article en tant que :<strong class="text-info"><?php echo($_SESSION['last_Name']." ".$_SESSION['first_Name'] ); ?></strong></p>
+					<input class=" text-center col-sm-12-6 col-md-4 btn btn-success" type="submit" name="submit" id="btnSubmit" value="Modifier">
 				</div>
 			</form>
-		</div>
 	</div>

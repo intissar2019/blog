@@ -60,7 +60,7 @@ if(isset($_POST['submit'])){
 	];
 	$queryUpdatePost->execute($update);
 
-   // header('Location:showPosts.php');
+  header('Location:showPosts.php');
 }
 
 

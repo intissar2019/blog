@@ -9,7 +9,7 @@ $queryDeletePost = $pdo->prepare("
 );
 $queryDeletePost->execute([$id]);
 
-//header ("location:showPosts.php");	
+header ("location:showPosts.php");	
 
 
 

@@ -5,7 +5,7 @@ $idPost=$_GET['idPost'];
 
 /***AFFICHAGE D UN POSTE ******/
 	$querySinglePost = $pdo->prepare("
-		SELECT article.id,article.imageArticle,article.titre, article.body, article.dateArticle, user.first_Name, user.last_Name,category.name 
+		SELECT article.id,article.imageArticle,article.titre, article.body, article.dateArticle, user.first_Name, user.last_Name,user.imgUser,category.name 
 		FROM article 
 		INNER JOIN user ON user.id=article.id_user 
 		INNER JOIN category ON category.id=article.id_category 
@@ -13,7 +13,6 @@ $idPost=$_GET['idPost'];
 	);
 	$querySinglePost->execute();
 	$singlePost = $querySinglePost->fetch(PDO::FETCH_ASSOC);
-
 
 
 	/*******HTAGS************************/
@@ -37,13 +36,20 @@ $queryNumberOfCommentsSinglePost = $pdo->prepare("
 
 
 	/****AFFICHAGE DES COMMENTAIRES ASSOCIES AU POSTE***/
-	$queryCommentsSinglePost = $pdo->prepare("SELECT `id`, `nameCommentor`, `body`, `dateComment`, `idArticle` FROM `comments` WHERE `idArticle`=?");
+	$queryCommentsSinglePost = $pdo->prepare("
+		SELECT   `idCommentor`, `body`, `dateComment`, `idArticle`,`user`.id , `first_Name`, `last_Name`, `imgUser` 
+		FROM `comments` 
+		INNER JOIN user
+		ON `comments`.idCommentor=`user`.id
+		WHERE `idArticle`=?
+		");
 	$queryCommentsSinglePost->execute([$idPost]);
 	$commentsSinglePost = $queryCommentsSinglePost->fetchAll(PDO::FETCH_ASSOC);
 	
 	
-  $template = 'post';
-include'layout.php';
+	
+  	$template = 'post';
+	include'layout.php';
 
 	
 

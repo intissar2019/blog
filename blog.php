@@ -3,7 +3,7 @@
 include'connexionDB.php';
 /******** ******** *********** ******** AFFICHER TOUS LES ARTICLES******* ****** *********** ********/
 	$queryPosts = $pdo->prepare(
-		"SELECT  article.imageArticle, article.id,article.titre, article.body, article.dateArticle, user.first_Name, user.last_Name,category.name 
+		"SELECT  article.imageArticle, article.id,article.titre, article.body, article.dateArticle, user.first_Name, user.last_Name, user.imgUser,category.name 
 		FROM article 
 		INNER JOIN user ON user.id=article.id_user 
 		INNER JOIN category ON category.id=article.id_category
@@ -11,6 +11,7 @@ include'connexionDB.php';
 	);
 	$queryPosts->execute();
 	$posts = $queryPosts->fetchAll(PDO::FETCH_ASSOC);
+	
 
 	/**************nombre de commentaires*******************/
 	$queryNumberOfCommenters = $pdo->prepare(

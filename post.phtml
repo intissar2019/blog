@@ -1,7 +1,8 @@
+<main class="post blog-post col-lg-8"> 
 <div class="container">
   <div class="post-single post">
     <div class="post-thumbnail">
-      <img src="img/<?=$singlePost['imageArticle']?>" alt="..." class="img-fluid">
+      <img src="img/<?=$singlePost['imageArticle']?>" alt="..." class="img-fluid w-100">
     </div>
     <div class="post-details">
       <div class="post-meta d-flex justify-content-between">
@@ -9,10 +10,12 @@
           <a href="#"><?=$singlePost['name']?></a>
         </div>
       </div>
-      <h1><?=$singlePost['titre']?><a href="#"><i class="fa fa-bookmark-o"></i></a>
+      <h1><?=htmlspecialchars($singlePost['titre'])?><a href="#"><i class="fa fa-bookmark-o"></i></a>
       </h1>
       <div class="post-footer d-flex align-items-center flex-column flex-sm-row"><a href="#" class="author d-flex align-items-center flex-wrap">
-        <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid"></div>
+        <div class="avatar">
+          <img src="img/<?=$singlePost['imgUser']?>" alt="..." class="img-fluid" width="40px" height="40px" >     
+        </div>
         <div class="title"><span><?php echo ($singlePost['first_Name'].' '.$singlePost['last_Name']); ?></span></div></a>
         <div class="d-flex align-items-center flex-wrap">       
           <div class="date"><i class="icon-clock"></i><?=$singlePost['dateArticle']?></div>
@@ -20,7 +23,7 @@
         </div>
       </div>
       <div class="post-body">
-        <p class="lead"><?=$singlePost['body']?></p>
+        <p class="lead"><?=htmlspecialchars($singlePost['body'])?></p>
       </div>
       <?php if ($tags) { ?>
       <div class="post-tags m-2 p-2 ">
@@ -35,71 +38,98 @@
           <h3 class="h6">Commentaires
             <span class="no-of-comments">
               <?php echo'('. $numberOfCommentsSinglePost['nbc'].')';
-                if ($numberOfCommentsSinglePost['nbc']==0){ echo (" Soyez le 1er à noter cet Article ! ") ;} ?>         
+                if ($numberOfCommentsSinglePost['nbc']==0): echo (" Soyez le 1er à noter cet Article ! ") ;endif; ?>         
             </span>
           </h3>
         </header>
-         <?php foreach($commentsSinglePost as $indexcommentsSinglePost => $commentSinglePost)  {?>  
+         <?php foreach($commentsSinglePost as $indexcommentsSinglePost => $commentSinglePost):?> 
         <div class="comment">
-          <div class="comment-header d-flex justify-content-between">
-            <div class="user d-flex align-items-center">
-              <div class="image"><img src="img/user.svg" alt="..." class="img-fluid rounded-circle">
+             <div class="comment-header d-flex justify-content-between">
+                  <div class="user d-flex align-items-center">
+                      <div class="image"> <img src="img/<?=$commentSinglePost['imgUser']?>" alt="..." class="img-fluid  rounded-circle" width="40px" height="40px" ></div>
+                        <div class="title">
+                          <strong><?=$commentSinglePost['first_Name']?> <?=$commentSinglePost['last_Name']?></strong>
+                          <span class="date"><?=$commentSinglePost['dateComment']?></span></div>
+                  </div>
               </div>
-              <div class="title">
-                <strong><?=$commentSinglePost['nameCommentor']?></strong>
-                <span class="date"><?=$commentSinglePost['dateComment']?></span>
+              <div class="comment-body">
+                 <p><?=$commentSinglePost['body']?></p>
               </div>
-            </div>
-          </div>
-          <div class="comment-body">
-            <p><?=$commentSinglePost['body']?></p>
-          </div>
         </div>
-        <?php } ?>
+        <?php endforeach; ?>
       </div>
+        <?php
+        /////**********section reserved only for members******//////
+        if(isset($_SESSION['pseudo']) && $_SESSION['pseudo'] != "" ): ?>
       <div class="add-comment">
         <header>
           <h3 class="h6">Ajouter un commentaire</h3>
         </header>
-        <form  class="commenting-form" action="#" >
+        <form  class="commenting-form"  >
           <div class="row">
-            <div class="form-group col-md-6">
-              <input type="text" name="username" id="username" placeholder="Nom" class="form-control">
-            </div>
-            <div class="form-group col-md-6">
-              <input type="email" name="username" id="useremail" placeholder="Pseudo" class="form-control">
+            <div class="form-group col-md-12">
+              <input type="hidden" name="hidden" value="<?=$idPost?>" id="hideid" >
+              <textarea name="usercomment" id="usercomment" placeholder="Taper votre commentaire" class="form-control" rows="4"></textarea>
+              <div class = "text-danger" id="invalidcommenter"></div>
             </div>
             <div class="form-group col-md-12">
-              <textarea name="usercomment" id="usercomment" placeholder="Taper votre commentaire" class="form-control"></textarea>
-            </div>
-            <div class="form-group col-md-12">
-              <input type="hidden" name="hidden" value="<?=$id?>" id="hideid" >
               <button type="submit" class="btn btn-secondary" id="submitc">Commenter</button>
               <button type="reset" class="btn btn-secondary" id="resetc">Annuler</button>
             </div>
             </div>
           </form>
         </div>
+     <?php endif; ?>   
     </div>
   </div>
 </div>
+</main>
+<script
+              src="https://code.jquery.com/jquery-3.3.1.min.js"
+              integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+              crossorigin="anonymous">
+                
+</script>
+
       
-<script>  $( "#submitc" ).click(function(e) {    e.preventDefault();
-   var nom=$("#username").val();
-   var commentaire=$("#usercomment").val();
-   var hideid=$('#hideid').val();
-   if(commentaire==""){
-     $("#usercomment").css('border','1px solid red');
-   }
+<script>  
+  $( "#submitc" ).click(function(e) {    
+        e.preventDefault();
+
+        var commentaire=$("#usercomment").val();
+        var hideid=$('#hideid').val();
+
+          if(commentaire.length <  10 || commentaire.length > 1000 ){
+             console.log("rbkb kbk");
+              $('#usercomment').addClass('is-invalid');
+              $('#invalidcommenter').html('SVP postuler un commentaire entre  10 et 1000 caractéres !');
+          }
+   
    else{
-         $.ajax({ url : 'addcommenterVisitor.php', type : 'POST',dataType:'html',data:{name:nom,comment:commentaire,hideId:hideid}, success : function(result){
-          $('.post-comments').empty();
-            $('.post-comments').html(result);          }});
+         $.ajax({ 
+              url : 'addComment.php', type : 'POST',dataType:'html',
+              data:{
+                comment:commentaire,
+                hideId:hideid },
+                success : function(result)
+              {
+                $('.post-comments').empty();
+                $('.post-comments').html(result); 
+                $('.commenting-form').trigger('reset');
+              }
+        });
          $('.commenting-form').trigger('reset');
      }
  });
- $( "#resetc" ).click(function(e) {
-   $('.commenting-form').trigger('reset');  });</script>
+
+  /*****button reset ******/
+
+   $( "#resetc" ).click(function(e) {
+        $('.commenting-form').trigger('reset'); 
+         $('#invalidcommenter').html('');
+    });
+
+ </script>
 
   </body>
 </html>

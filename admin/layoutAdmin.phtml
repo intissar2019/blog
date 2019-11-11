@@ -1,46 +1,55 @@
+<?php 
+    if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
+    ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 	<meta charset="utf-8">
 	<title>Accueil -- Blog--</title>
-	<link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<link rel="stylesheet" type="text/css" href="style/style.css">
+	<!-- Feuilles de style externes -->
+    <link rel="stylesheet" href="css/normalize-3.0.3.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf" crossorigin="anonymous">
+
+    <!-- CDN DATA TABLE style -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/kt-2.5.1/r-2.2.3/sc-2.0.1/sl-1.3.1/datatables.min.css"/>
 </head>
 <body>
 	<header>
-		<nav class="navbar navbar-expand-lg"> 
-			 <div class="navbar-header d-flex align-items-center justify-content-between ">
-			 <h1 class=" navbar-brand">Administration </h1>
-			<button type="button" data-toggle="collapse" data-target="#navbarcollapse" aria-controls="navbarcollapse" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span></span><span></span><span></span></button>
-		</div>
-		 <div  class="collapse navbar-collapse">
-		 	 <ul class="navbar-nav ml-auto" id="navbarcollapse"> 
-				<li class="nav-item"><a class="btn  " href="showPosts.php">liste des articles </a></li>
-				<li  class="nav-item"><a class="btn  " href="addPosts.php">Ajouter un article</a></li>
-				<li  class="nav-item"><a class="btn" href="../blog.php">Accéder au Blog</a></li>
-				<li  class="nav-item"><a class="btn" href="showPosts.php">Gérer les utilisateurs</a></li>
+		<nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+		<a class="navbar-brand d-flex" href="showPosts.php"><i class="fas fa-wrench text-success mr-3"></i><em><?=$_SESSION['last_Name']  ?> <?=$_SESSION['first_Name']  ?></em></a>
+		 <a href="../logOut.php" class=" nav-item text-danger" title="signOut" ><i class="fas fa-sign-out-alt"></i></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+		 <div  class="collapse navbar-collapse" id="navbarColor01">
+		 	 <ul class="navbar-nav ml-auto" > 
+				<li class="nav-item "><a class="nav-link  " href="showPosts.php">liste des articles </a></li>
+				<li  class="nav-item"><a class="nav-link  " href="addPosts.php">Ajouter un article</a></li>
+				<li  class="nav-item"><a class="nav-link" href="showUsers.php">Gérer les utilisateurs</a></li>
+				<li  class="btn btn-outline-success"><a class="nav-link text-white" href="../blog.php">Retour au Blog</a></li>
 			</ul>
 		 </div>
 		</nav>
 	</header>
-	<main>
+	<main class="m-5">
 		 <!-- Chargement du template PHTML spécifié par le programme PHP -->
          <?php include $template.'.phtml' ?>
 	</main>
-	<footer class="container p-4 m-4">
-		<div class="row d-flex">
-			<div class="col-lg6 m-auto"><p> TEMPLATE PAR KLACH INTISSAR </p></div>
-			<div class="col-lg6 m-auto"><p> © 2019.TOUS DROITS RÉSERVÉS</p></div>
-		</div>
-	</footer>
+	 <footer class="container-fluid p-5 bg-primary text-white">
+			<p class="h6 text-center ">Interface Administration du Blog Par   <em class="text-success">Klach Intissar 3WAcademy</em></p>
+		</footer>
 	<script
               src="https://code.jquery.com/jquery-3.3.1.min.js"
               integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
               crossorigin="anonymous"></script>
+              <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/kt-2.5.1/r-2.2.3/sc-2.0.1/sl-1.3.1/datatables.min.js"></script>
 </body>
 </html>

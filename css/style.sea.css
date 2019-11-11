@@ -105,8 +105,8 @@ h1:hover a {
 }
 
 .widget {
-  margin-bottom: 40px;
-  padding: 30px;
+  margin-bottom: 20px;
+  padding: 20px;
   border: 1px solid #eee;
 }
 
@@ -448,8 +448,7 @@ div[class*="-btn"] {
 */
 .navbar {
   background: #fff;
-  padding-top: 20px !important;
-  padding-bottom: 20px !important;
+ 
   z-index: 9998;
   border-bottom: 1px solid #ddd;
 }
@@ -1053,7 +1052,7 @@ section.gallery .overlay i {
 */
 footer.main-footer {
   background: #0e0e0e;
-  padding: 100px 0 0;
+  padding: 20px 0 0;
   color: #fff;
 }
 
@@ -1158,7 +1157,7 @@ footer.main-footer .title::after {
 }
 
 main.posts-listing {
-  padding-top: 50px;
+  padding-top: 20px;
   padding-left: 0;
   padding-right: 0;
 }

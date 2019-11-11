@@ -1,7 +1,8 @@
-<div class="container" >
- <header>
-     <h1> Catégorie:<?=$postsByCategory[0]['name'] ?></h1>
- </header>
+ <main class="posts-listing col-lg-8 "> 
+        <div class="container" >
+            <header>
+                 <h1 class="h3 text-primary p-3"> Catégorie:<?=$postsByCategory[0]['name'] ?></h1>
+            </header>
 
             <div class="row" id="mainposts">
               <?php if ($postsByCategory!= false){?>
@@ -12,10 +13,10 @@
                 <div class="post-details">
                   <div class="post-meta d-flex justify-content-between">
                     <div class="date meta-last"><?=$postBycategory['dateArticle']?></div>
-                    <div class="category"><a href="#"><?=$postBycategory['name']?></a></div>
+                    <div class="category"><a href="post.php?idPost=<?= $postBycategory['ida']?>"><?=$postBycategory['name']?></a></div>
                   </div><a href="">
                     <h3 class="h4"><?=$postBycategory['titre']?></h3></a>
-                  <p class="text-muted"><?=substr($postBycategory['body'], 0,300)?></p>
+                  <p class="text-muted"><?=substr($postBycategory['body'], 0,300)?><strong class=" text-info"><a href="post.php?idPost=<?= $postBycategory['ida']?>">[...]</a></strong></p>
                   <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
                       <div class="avatar"><img src="img/moi.jpg" alt="..." class="img-fluid"></div>
                       <div class="title"><span><?php echo ($postBycategory['first_Name'].' '.$postBycategory['last_Name']); ?></span></div></a>
@@ -27,6 +28,7 @@
                 <?php }}?>
           </div>
         </div>
+      </main>
  
 
 

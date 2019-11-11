@@ -1,4 +1,5 @@
 <?php
+ session_start();
 include '../connexionDB.php';
 
 $id=$_GET['id'];
@@ -10,11 +11,8 @@ $id=$_GET['id'];
 				article.imageArticle , 
 				article.dateArticle,
 				article.imageArticle, 
-				user.first_Name, 
-				user.last_Name,
 				category.name 
-		FROM article 
-		INNER JOIN user ON user.id=article.id_user 
+		FROM article  
 		INNER JOIN category ON category.id=article.id_category 
 		WHERE article.id=?"
 	);
@@ -25,13 +23,21 @@ $id=$_GET['id'];
 
 	/*** *** *** **** *** *** *** *** COMMENTS  ASSOCIAD *** **** ***/
 	$queryComments = $pdo->prepare(
-		"SELECT `id`, `nameCommentor`, `body`, `dateComment`, `idArticle` 
-		FROM `comments` 
+		"SELECT 
+			 comments.id, 
+			 `idCommentor`,
+			 `body`, 
+			 `dateComment`, 
+			 `idArticle`,
+			 first_Name,
+			 last_Name
+		FROM `comments`
+		INNER JOIN user ON comments.idCommentor=user.id 
 		WHERE `idArticle`=?"
 	);
 	$queryComments->execute([$id]);
 	$comments = $queryComments->fetchAll(PDO::FETCH_ASSOC);
-
+	
 
 	$template = 'singlePost';
     include 'layoutAdmin.phtml';

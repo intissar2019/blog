@@ -1,21 +1,33 @@
-    
+     <main class="posts-listing col-lg-8 "> 
           <div class="container" >
+             <!-- Widget [Search Bar Widget]-->
+              <div class="widget search">
+                <form action="#" class="search-form">
+                  <div class="form-group">
+                    <input  id="search" type="search" placeholder="Cherchez un article ">
+                    <button id="submitSearch" type="submit" class="submit"><i class="icon-search"></i></button>
+                  </div>
+                </form>
+            </div>
+          <!-- Widget [Latest Posts Widget]-->
             <div class="row" id="mainposts">
               <?php if ($posts!= false){
              foreach($posts as $index => $post){ ?>
               <!-- post -->
             <div class="post col-xl-6">
-            <div class="post-thumbnail"><a href="post.php?idPost=<?= $post['id']?>"><img src="img/<?=$post['imageArticle']?>" alt="image:<?=$post['titre'] ?>" class="img-fluid img-zoom"></a></div>
+                <div class="post-thumbnail"><a href="post.php?idPost=<?= $post['id']?>"><img src="img/<?=$post['imageArticle']?>" alt="image:<?=$post['titre'] ?>" class="img-fluid img-zoom w-100"></a></div>
                 <div class="post-details">
                   <div class="post-meta d-flex justify-content-between">
                     <div class="date meta-last"><?=$post['dateArticle']?></div>
-                    <div class="category"><a href="#"><?=$post['name']?></a></div>
-                  </div><a href="">
-                    <h3 class="h4"><?=$post['titre']?></h3></a>
-                  <p class="text-muted"><?=substr($post['body'], 0,300)?></p>
-                  <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap">
-                      <div class="avatar"><img src="img/moi.jpg" alt="..." class="img-fluid"></div>
-                      <div class="title"><span><?php echo ($post['first_Name'].' '.$post['last_Name']); ?></span></div></a>
+                    <div class="category"><a href="post.php?idPost=<?= $post['id']?>"><?=$post['name']?></a></div>
+                  </div><a href="#">
+                    <h3 class="h4"><?=htmlspecialchars($post['titre'])?></h3></a>
+                  <p class="text-muted viewPost"><?=htmlspecialchars(substr($post['body'], 0,150))?><strong class=" text-info"><a href="post.php?idPost=<?= $post['id']?>">[...]</a></strong></p>
+                  <footer class="post-footer d-flex align-items-center"><a href="#" class="author d-flex align-items-center flex-wrap"></a>
+                      <div class="avatar">
+                        <img src="img/<?=$post['imgUser']?>" alt="..." class="img-fluid" width="40px" height="40px" >
+                      </div>
+                      <div class="title"><span><?php echo ($post['first_Name'].' '.$post['last_Name']); ?></span></div>
                     
                     <div class="comments meta-last"><i class="icon-comment"></i><?=$numberOfComments[$index]['nbc']?></div>
                   </footer>
@@ -24,77 +36,44 @@
                 <?php }}?>
           </div>
         </div>
-   
+      </main>
+<script
+              src="https://code.jquery.com/jquery-3.3.1.min.js"
+              integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+              crossorigin="anonymous">
+                
+</script>
+<script>
     
    
-     
-     
-
-<script>
- // ---------------------------------------------- //
-    // Search Bar
-    // ---------------------------------------------- //
         
     $('#submitSearch').on('click', function (e) {
         e.preventDefault();
 
         var textSearched=$('#search').val();
-        console.log(textSearched);
+      
 
-var posts = $('#mainposts');
-posts.empty();
-$.ajax({ 
-     url : 'datasearch.php',
-     type : 'POST',
-     dataType:'json',
-     data: {'param':textSearched}, 
-
- success : function(result){
-    
-     
-    $.each(result,function(key, val){
-      var post=$("<div/>").appendTo(posts);
-       var img = $("<img src='img/"+val['imageArticle']+"' alt='...' width='640px'/>").appendTo(post);
-    var titre = $("<h2>"+val['titre']+"</h2><br>").appendTo(post);
-    var body=$('<p/>'+val['body']+'</p><br>').appendTo(post);
-      });
-    
-        
-}
-
-});
-
-                });
-
-
-    
-      $('.test').on('click',function(event){
-              event.preventDefault();
-     
-        var id = $(this).data('id');
-        console.log(id);
-  
- var posts = $('#mainposts');
- posts.empty();
- $.ajax({ 
-     url : 'searchCategory.php',
-     type : 'POST',
-     dataType:'html',
-     data: {'idcat':id}, 
-
-  success : function(result){
-   posts.html(result);
-    
-     
-  
-        
- }
-
+    var posts = $('#mainposts');
+    posts.empty();
+          $.ajax({ 
+             url : 'datasearch.php',
+             type : 'POST',
+             dataType:'json',
+            data: {'param':textSearched}, 
+            success : function(result){
+                 $.each(result,function(key, val){
+                 var post=$("<div/>").appendTo(posts);
+                 var img = $("<img src='img/"+val['imageArticle']+"' alt='...' class='img-fluid p-3'/>").appendTo(post);
+                 var titre = $("<h2 class='pl-2 pr-2'>"+val['titre']+"</h2><br>").appendTo(post);
+                 var body=$('<p class="p-3">'+(val['body']).substr(0, 300)+'</p>').appendTo(post);
+                 var link=$('<a href="post.php?idPost='+val['id']+'" class="nav-link">Lire la suite</a>').appendTo(post);
+                  });
+               }
+       });
 });
 
 
-
-      }); 
+    
    
   
  

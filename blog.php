@@ -15,10 +15,11 @@ include'connexionDB.php';
 
 	/**************nombre de commentaires*******************/
 	$queryNumberOfCommenters = $pdo->prepare(
-		"SELECT  article.id, count(comments.id) AS nbc 
+		"SELECT  article.id,article.dateArticle, count(comments.id) AS nbc 
 		FROM `article` 
 		LEFT JOIN  comments ON comments.idArticle=article.id 
-		GROUP BY article.id "
+		GROUP BY article.id 
+		ORDER BY article.dateArticle DESC"
 	);
 	$queryNumberOfCommenters->execute();
 	$numberOfComments = $queryNumberOfCommenters->fetchAll(PDO::FETCH_ASSOC);
